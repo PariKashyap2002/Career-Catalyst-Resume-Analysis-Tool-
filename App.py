@@ -13,7 +13,7 @@ nltk.download('stopwords')
 # nlp=spacy.load('en_core_web_sm-2.3.1')
 
 # Load the SpaCy model
-nlp = spacy.load('en_core_web_sm')
+# nlp = spacy.load('en_core_web_sm')
 from spacy.cli import download
 
 # Download the SpaCy model if not already downloaded
