@@ -203,8 +203,8 @@ def run():
         # pdf_file = st.file_uploader("Choose your Resume", type=["pdf"])
         if pdf_file is not None:
             # with st.spinner('Uploading your Resume....'):
-            #     time.sleep(4)
-            save_image_path = './Uploaded_Resumes/' + pdf_file.name
+            #     time.sleep(4)'./Uploaded_Resumes/'
+            save_image_path = pdf_file.name
             with open(save_image_path, "wb") as f:
                 f.write(pdf_file.getbuffer())
             show_pdf(save_image_path)
