@@ -19,7 +19,6 @@ nltk.download('stopwords')
 
 # # Download the SpaCy model if not already downloaded
 # download('en_core_web_sm')
-subprocess.run("python -m spacy download en_core_web_sm", shell=True, check=True)
 
 
 # Load the SpaCy model
@@ -179,7 +178,7 @@ def run():
     # connection.select_db("sra")
 
     # Create table
-    DB_table_name = 'user1_data'
+    DB_table_name = 'user_data'
     table_sql = "CREATE TABLE IF NOT EXISTS " + DB_table_name + """
                     (ID INT NOT NULL AUTO_INCREMENT,
                      Name varchar(100) NOT NULL,
