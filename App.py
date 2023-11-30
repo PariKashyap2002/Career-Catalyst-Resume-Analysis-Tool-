@@ -3,7 +3,14 @@ import nltk
 import spacy
 from spacy.matcher import PhraseMatcher
 nltk.download('stopwords')
-nlp=spacy.load('en_core_web_sm-2.3.1')
+from spacy.cli import download
+
+# Download the model if not already downloaded
+download('en_core_web_sm-2.3.1')
+
+# Load the model
+nlp = spacy.load('en_core_web_sm-2.3.1')
+# nlp=spacy.load('en_core_web_sm-2.3.1')
 
 
 import pandas as pd
