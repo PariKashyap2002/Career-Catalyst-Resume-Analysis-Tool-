@@ -160,7 +160,7 @@ def run():
     # connection.select_db("sra")
 
     # Create table
-    DB_table_name = 'user_data'
+    DB_table_name = 'user1_data'
     table_sql = "CREATE TABLE IF NOT EXISTS " + DB_table_name + """
                     (ID INT NOT NULL AUTO_INCREMENT,
                      Name varchar(100) NOT NULL,
@@ -170,8 +170,8 @@ def run():
                      Page_no VARCHAR(5) NOT NULL,
                      Predicted_Field VARCHAR(25) NOT NULL,
                      User_level VARCHAR(30) NOT NULL,
-                     Actual_skills VARCHAR(300) NOT NULL,
-                     Recommended_skills VARCHAR(300) NOT NULL,
+                     Actual_skills VARCHAR(500) NOT NULL,
+                     Recommended_skills VARCHAR(500) NOT NULL,
                      Recommended_courses VARCHAR(600) NOT NULL,
                      PRIMARY KEY (ID));
                     """
