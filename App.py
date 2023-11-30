@@ -9,9 +9,18 @@ nltk.download('stopwords')
 # download('en_core_web_sm-2.3.1')
 
 # Load the model
-nlp = spacy.load('en_core_web_sm-2.3.1')
+# nlp = spacy.load('en_core_web_sm-2.3.1')
 # nlp=spacy.load('en_core_web_sm-2.3.1')
 
+# Load the SpaCy model
+nlp = spacy.load('en_core_web_sm')
+from spacy.cli import download
+
+# Download the SpaCy model if not already downloaded
+download('en_core_web_sm')
+
+# Load the SpaCy model
+nlp = spacy.load('en_core_web_sm')
 
 import pandas as pd
 import base64, random
