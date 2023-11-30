@@ -101,7 +101,7 @@ def course_recommender(course_list, unique_key):
 
     return rec_course
 
-connection = pymysql.connect(host='localhost', user='root', password='')
+connection = pymysql.connect(host='sql12.freesqldatabase.com', user='sql12666438', password='ZMTJl2kzrD')
 cursor = connection.cursor()
 
 
