@@ -1,4 +1,5 @@
 import streamlit as st
+import subprocess
 import nltk
 import spacy
 from spacy.matcher import PhraseMatcher
@@ -18,7 +19,8 @@ nltk.download('stopwords')
 
 # # Download the SpaCy model if not already downloaded
 # download('en_core_web_sm')
-st.run("python -m spacy download en_core_web_sm", shell=True)
+subprocess.run("python -m spacy download en_core_web_sm", shell=True, check=True)
+
 
 # Load the SpaCy model
 nlp = spacy.load('en_core_web_sm')
