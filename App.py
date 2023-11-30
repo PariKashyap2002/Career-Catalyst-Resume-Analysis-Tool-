@@ -101,7 +101,7 @@ def course_recommender(course_list, unique_key):
 
     return rec_course
 
-connection = pymysql.connect(host='localhost', user='root', password='')
+connection = pymysql.connect(host='mysql-38506d7c-kashyap-f2fe.a.aivencloud.com', user='avnadmin', password='AVNS_K7131xonxcfemuBFLVh', database='defaultdb', port=15380)
 cursor = connection.cursor()
 
 
@@ -155,9 +155,9 @@ def run():
     st.image(img)
 
     # Create the DB
-    db_sql = """CREATE DATABASE IF NOT EXISTS SRA;"""
-    cursor.execute(db_sql)
-    connection.select_db("sra")
+    # db_sql = """CREATE DATABASE IF NOT EXISTS SRA;"""
+    # cursor.execute(db_sql)
+    # connection.select_db("sra")
 
     # Create table
     DB_table_name = 'user_data'
