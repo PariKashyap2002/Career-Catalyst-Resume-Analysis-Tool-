@@ -3,7 +3,7 @@ import nltk
 import spacy
 from spacy.matcher import PhraseMatcher
 nltk.download('stopwords')
-nlp=spacy.load('en_core_web_sm')
+nlp=spacy.load('./model/en_core_web_sm/en_core_web_sm-2.3.1')
 
 
 import pandas as pd
@@ -101,7 +101,7 @@ def course_recommender(course_list, unique_key):
 
     return rec_course
 
-connection = pymysql.connect(host='sql12.freesqldatabase.com', user='sql12666438', password='ZMTJl2kzrD')
+connection = pymysql.connect(host='localhost', user='root', password='')
 cursor = connection.cursor()
 
 
