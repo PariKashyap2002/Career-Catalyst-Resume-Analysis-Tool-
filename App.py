@@ -128,14 +128,19 @@ def pdf_to_images(file_path):
     return images
 
 def show_pdf(file_path):
-    st.markdown("### PDF Preview")
+    with open(file_path, "rb") as f:
+        pdf_bytes = f.read()
 
-    # Convert PDF to images
-    pdf_images = pdf_to_images(file_path)
+    # Display PDF using PyMuPDF
+    pdf_document = fitz.open(file_path)
 
-    # Display PDF images
-    for page_num, image in enumerate(pdf_images, start=1):
-        st.image(image.pil_image, caption=f"Page {page_num}", use_column_width=True)
+    for page_num in range(pdf_document.page_count):
+        page = pdf_document[page_num]
+        pixmap = page.get_pixmap()
+        image_bytes = pixmap.samples
+        base64_image = base64.b64encode(image_bytes).decode("utf-8")
+        st.image(f"data:image/png;base64,{base64_image}", caption=f"Page {page_num + 1}", use_column_width=True)
+
 
 # def show_pdf(file_path):
 #     pdf_images = convert_from_path(file_path)
