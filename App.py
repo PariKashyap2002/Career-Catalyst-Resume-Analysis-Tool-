@@ -23,6 +23,7 @@ nlp = spacy.load('en_core_web_sm')
 
 # Load the SpaCy model
 # nlp = spacy.load('en_core_web_sm')
+import fitz
 from streamlit.components.v1 import html
 import pandas as pd
 import base64, random
@@ -94,9 +95,17 @@ def pdf_reader(file):
 #     html(pdf_display, height=1000, width=700, scrolling=True)
 def show_pdf(file_path):
     with open(file_path, "rb") as f:
-        base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-    pdf_display = f'<iframe src="https://mozilla.github.io/pdf.js/web/viewer.html?file=data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
+        pdf_bytes = f.read()
+
+    # Display PDF using PyMuPDF
+    pdf_document = fitz.open(file_path)
+
+    for page_num in range(pdf_document.page_count):
+        page = pdf_document[page_num]
+        image_bytes = page.get_pixmap().get_image_data()
+        base64_image = base64.b64encode(image_bytes).decode("utf-8")
+        st.image(f"data:image/png;base64,{base64_image}", caption=f"Page {page_num + 1}", use_column_width=True)
+
 
 # def show_pdf(file_path):
 #     pdf_images = convert_from_path(file_path)
