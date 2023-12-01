@@ -1,6 +1,7 @@
 pdfminer3
 pyresparser
 streamlit
+base64
 pandas
 pafy
 plotly

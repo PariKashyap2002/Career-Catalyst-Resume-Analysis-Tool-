@@ -81,17 +81,17 @@ def pdf_reader(file):
     return text
 
 
-# def show_pdf(file_path):
-#     with open(file_path, "rb") as f:
-#         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-#     # pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
-#     pdf_display = f"""<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>"""
-#     st.markdown(pdf_display, unsafe_allow_html=True)
 def show_pdf(file_path):
     with open(file_path, "rb") as f:
         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-    pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
-    html(pdf_display, height=1000, width=700, scrolling=True)
+    # pdf_display = f'<embed src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf">'
+    pdf_display = f"""<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>"""
+    st.markdown(pdf_display, unsafe_allow_html=True)
+# def show_pdf(file_path):
+#     with open(file_path, "rb") as f:
+#         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
+#     pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
+#     html(pdf_display, height=1000, width=700, scrolling=True)
 
 # def course_recommender(course_list):
 #     st.subheader("**Courses & Certificates🎓 Recommendations**")
