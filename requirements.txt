@@ -2,6 +2,7 @@ pdfminer3
 pyresparser
 streamlit
 pdf2image
+poppler-utils
 # base64
 pandas
 pafy
