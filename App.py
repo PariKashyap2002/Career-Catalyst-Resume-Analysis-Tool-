@@ -102,10 +102,11 @@ def show_pdf(file_path):
 
     for page_num in range(pdf_document.page_count):
         page = pdf_document[page_num]
-        image_bytes = page.get_pixmap().get_image_data()
+        image_matrix = page.get_image_matrix()
+        pixmap = page.get_pixmap(matrix=image_matrix)
+        image_bytes = pixmap.image
         base64_image = base64.b64encode(image_bytes).decode("utf-8")
         st.image(f"data:image/png;base64,{base64_image}", caption=f"Page {page_num + 1}", use_column_width=True)
-
 
 # def show_pdf(file_path):
 #     pdf_images = convert_from_path(file_path)
