@@ -23,7 +23,6 @@ nlp = spacy.load('en_core_web_sm')
 
 # Load the SpaCy model
 # nlp = spacy.load('en_core_web_sm')
-from pdf2image import convert_from_path
 from streamlit.components.v1 import html
 import pandas as pd
 import base64, random
@@ -93,14 +92,21 @@ def pdf_reader(file):
 #         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
 #     pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
 #     html(pdf_display, height=1000, width=700, scrolling=True)
-
 def show_pdf(file_path):
-    pdf_images = convert_from_path(file_path)
+    with open(file_path, "rb") as f:
+        pdf_bytes = f.read()
 
-    for i, image in enumerate(pdf_images):
-        image_bytes = image.convert("RGB").tobytes()
-        encoded_image = base64.b64encode(image_bytes).decode("utf-8")
-        st.image(f"data:image/png;base64,{encoded_image}", caption=f"Page {i+1}", use_column_width=True)
+    st.write("### PDF Viewer")
+    st.write(f"Displaying PDF: {file_path}")
+    st.pdf_reader(pdf_bytes)
+
+# def show_pdf(file_path):
+#     pdf_images = convert_from_path(file_path)
+
+#     for i, image in enumerate(pdf_images):
+#         image_bytes = image.convert("RGB").tobytes()
+#         encoded_image = base64.b64encode(image_bytes).decode("utf-8")
+#         st.image(f"data:image/png;base64,{encoded_image}", caption=f"Page {i+1}", use_column_width=True)
 
 # def course_recommender(course_list):
 #     st.subheader("**Courses & Certificates🎓 Recommendations**")
