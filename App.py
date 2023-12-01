@@ -24,6 +24,7 @@ nlp = spacy.load('en_core_web_sm')
 # Load the SpaCy model
 # nlp = spacy.load('en_core_web_sm')
 import fitz
+from PyPDF2 import PdfFileReader
 from streamlit.components.v1 import html
 import pandas as pd
 import base64, random
@@ -63,23 +64,23 @@ def get_table_download_link(df, filename, text):
     return href
 
 
-def pdf_reader(file):
-    resource_manager = PDFResourceManager()
-    fake_file_handle = io.StringIO()
-    converter = TextConverter(resource_manager, fake_file_handle, laparams=LAParams())
-    page_interpreter = PDFPageInterpreter(resource_manager, converter)
-    with open(file, 'rb') as fh:
-        for page in PDFPage.get_pages(fh,
-                                      caching=True,
-                                      check_extractable=True):
-            page_interpreter.process_page(page)
-            print(page)
-        text = fake_file_handle.getvalue()
+# def pdf_reader(file):
+#     resource_manager = PDFResourceManager()
+#     fake_file_handle = io.StringIO()
+#     converter = TextConverter(resource_manager, fake_file_handle, laparams=LAParams())
+#     page_interpreter = PDFPageInterpreter(resource_manager, converter)
+#     with open(file, 'rb') as fh:
+#         for page in PDFPage.get_pages(fh,
+#                                       caching=True,
+#                                       check_extractable=True):
+#             page_interpreter.process_page(page)
+#             print(page)
+#         text = fake_file_handle.getvalue()
 
-    # close open handles
-    converter.close()
-    fake_file_handle.close()
-    return text
+#     # close open handles
+#     converter.close()
+#     fake_file_handle.close()
+#     return text
 
 
 # def show_pdf(file_path):
@@ -93,20 +94,48 @@ def pdf_reader(file):
 #         base64_pdf = base64.b64encode(f.read()).decode('utf-8')
 #     pdf_display = f'<iframe src="data:application/pdf;base64,{base64_pdf}" width="700" height="1000" type="application/pdf"></iframe>'
 #     html(pdf_display, height=1000, width=700, scrolling=True)
-def show_pdf(file_path):
-    with open(file_path, "rb") as f:
-        pdf_bytes = f.read()
+def pdf_reader(file):
+    resource_manager = fitz.PyPDFResourceManager()
+    fake_file_handle = io.StringIO()
+    converter = fitz.TextConverter(resource_manager, fake_file_handle, laparams=fitz.LAParams())
+    interpreter = fitz.TextPageInterpreter(resource_manager, converter)
 
-    # Display PDF using PyMuPDF
+    with open(file, 'rb') as fh:
+        pdf_document = PdfFileReader(fh)
+        for page_num in range(pdf_document.numPages):
+            page = pdf_document.getPage(page_num)
+            text = page.extract_text()
+            print(text)
+            fake_file_handle.write(text)
+
+        text = fake_file_handle.getvalue()
+
+    # close open handles
+    converter.close()
+    fake_file_handle.close()
+    return text
+
+def pdf_to_images(file_path):
+    images = []
     pdf_document = fitz.open(file_path)
 
     for page_num in range(pdf_document.page_count):
-        page = pdf_document[page_num]
-        image_matrix = page.get_image_matrix()
-        pixmap = page.get_pixmap(matrix=image_matrix)
-        image_bytes = pixmap.image
-        base64_image = base64.b64encode(image_bytes).decode("utf-8")
-        st.image(f"data:image/png;base64,{base64_image}", caption=f"Page {page_num + 1}", use_column_width=True)
+        page = pdf_document.load_page(page_num)
+        image_matrix = page.get_display_matrix(matrix=[2, 2])
+        image = page.get_pixmap(matrix=image_matrix)
+        images.append(image)
+
+    return images
+
+def show_pdf(file_path):
+    st.markdown("### PDF Preview")
+
+    # Convert PDF to images
+    pdf_images = pdf_to_images(file_path)
+
+    # Display PDF images
+    for page_num, image in enumerate(pdf_images, start=1):
+        st.image(image.pil_image, caption=f"Page {page_num}", use_column_width=True)
 
 # def show_pdf(file_path):
 #     pdf_images = convert_from_path(file_path)
